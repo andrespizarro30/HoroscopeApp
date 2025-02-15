@@ -1,4 +1,9 @@
 package com.afsoftwaresolutions.horoscopeapp.ui.luck.model
 
-class LuckyModel {
-}
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+
+data class LuckyModel(
+    @DrawableRes val image:Int,
+    @StringRes val text:Int
+)

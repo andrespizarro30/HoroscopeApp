@@ -21,13 +21,21 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"https://newastro.vercel.app/\"")
         }
+        getByName("debug") {
+            isDebuggable = true
+            resValue("string", "APP_NAME", "[DEBUG] HoroscApp")
+            buildConfigField("String", "BASE_URL", "\"https://newastro.vercel.app/\"")
+        }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -38,6 +46,7 @@ android {
     }
     buildFeatures{
         viewBinding = true
+        buildConfig = true
     }
 }
 
