@@ -15,7 +15,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
 import com.afsoftwaresolutions.horoscopeapp.R
 import com.afsoftwaresolutions.horoscopeapp.databinding.FragmentPalmistryBinding
+import com.afsoftwaresolutions.horoscopeapp.ui.permissions.PermissionsHelper
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PalmistryFragment : Fragment() {
@@ -27,21 +29,18 @@ class PalmistryFragment : Fragment() {
     private var _binding:FragmentPalmistryBinding? = null
     private val binding get() = _binding!!
 
+    @Inject
+    lateinit var permissionsHelper: PermissionsHelper
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (checkCameraPermission()) {
+        if (permissionsHelper.checkCameraPermission()) {
             startCamera()
         } else {
             requestPermissionLauncher.launch(CAMERA_PERMISSION)
         }
 
-    }
-
-    private fun checkCameraPermission(): Boolean {
-        return PermissionChecker.checkSelfPermission(
-            requireContext(), CAMERA_PERMISSION
-        ) == PermissionChecker.PERMISSION_GRANTED
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
